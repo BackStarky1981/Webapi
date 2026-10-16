@@ -16,7 +16,7 @@
     "/api/pendientes": {
       "get": {
         "tags": [
-          "ToDo.Api"
+          "Pendientes"
         ],
         "responses": {
           "200": {
@@ -26,13 +26,13 @@
       },
       "post": {
         "tags": [
-          "ToDo.Api"
+          "Pendientes"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ToDoItem"
+                "$ref": "#/components/schemas/CreateToDoItemDto"
               }
             }
           },
@@ -48,7 +48,64 @@
     "/api/pendientes/{id}": {
       "get": {
         "tags": [
-          "ToDo.Api"
+          "Pendientes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Pendientes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateToDoItemDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Pendientes"
         ],
         "parameters": [
           {
@@ -72,17 +129,17 @@
   },
   "components": {
     "schemas": {
-      "ToDoItem": {
+      "CreateToDoItemDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateToDoItemDto": {
+        "type": "object",
+        "properties": {
           "name": {
             "type": "string"
           },
@@ -95,7 +152,7 @@
   },
   "tags": [
     {
-      "name": "ToDo.Api"
+      "name": "Pendientes"
     }
   ]
 }

@@ -11,8 +11,8 @@ using ToDo.Api.Data;
 namespace ToDo.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260925180512_Cambia-Long-Name-ToDoItems")]
-    partial class CambiaLongNameToDoItems
+    [Migration("20261016103941_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,23 +26,42 @@ namespace ToDo.Api.Migrations
 
             modelBuilder.Entity("ToDo.Api.Models.ToDoItem", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("ToDoItems");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsCompleted = false,
+                            Name = "Pendiente 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsCompleted = true,
+                            Name = "Pendiente 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsCompleted = false,
+                            Name = "Pendiente 3"
+                        });
                 });
 #pragma warning restore 612, 618
         }
